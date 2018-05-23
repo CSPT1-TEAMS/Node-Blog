@@ -1,0 +1,21 @@
+{
+  "name": "node-blog",
+  "version": "1.0.0",
+  "description": "## Topics",
+  "main": "knexfile.js",
+  "dependencies": {},
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CSPT1-TEAMS/Node-Blog.git"
+  },
+  "author": "Sean Valdivia",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/CSPT1-TEAMS/Node-Blog/issues"
+  },
+  "homepage": "https://github.com/CSPT1-TEAMS/Node-Blog#readme"
+}
