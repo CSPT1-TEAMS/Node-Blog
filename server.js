@@ -9,6 +9,8 @@ const server = express();
 server.use(express.json());
 
 server.use('/posts', postRoutes);
+server.use('/users', userRoutes);
+server.use('/tags', tagRoutes);
 
 server.get('/', (req, res) => {
     res.send('Api is running!');
