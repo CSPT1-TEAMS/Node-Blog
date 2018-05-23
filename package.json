@@ -1,0 +1,26 @@
+{
+  "name": "node-blog",
+  "version": "1.0.0",
+  "description": "a node blog",
+  "main": "server.js",
+  "scripts": {
+    "start": "nodemon"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CSPT1-TEAMS/Node-Blog.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/CSPT1-TEAMS/Node-Blog/issues"
+  },
+  "homepage": "https://github.com/CSPT1-TEAMS/Node-Blog#readme",
+  "dependencies": {
+    "cors": "^2.8.4",
+    "express": "^4.16.3",
+    "knex": "^0.14.6",
+    "nodemon": "^1.17.4",
+    "sqlite3": "^4.0.0"
+  }
+}
