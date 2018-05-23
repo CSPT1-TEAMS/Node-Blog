@@ -3,7 +3,7 @@ const router = express.Router();
 const db = require('../seeds/03-posts.js');
 
 router.get('/', (req, res) => {
-    db.find()
+    db.get()
     .then(posts => {
         res.status(200).json({ posts })
     })
