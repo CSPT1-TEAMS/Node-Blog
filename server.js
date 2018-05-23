@@ -1,5 +1,8 @@
 const express = require('express');
-const db = require('./data/dbConfig.js');
+const post = require('./data/helpers/postDb.js');
+const tag = require('./data/helpers/tagDb.js');
+const user = require('./data/helpers/userDb.js');
+
 const cors = require('cors');
 const helmet = require('helmet');
 const server = express();
@@ -18,42 +21,47 @@ server.use(express.json());
 
 
 server.get('/api/posts', function (req, res) {
-    db.find()
+    post.get()
         .then(posts => {
             res.json({ posts })
         })
         .catch(error => {
             res.status(500).json({
-                error: "The posts information could not be retrieved."
+                error: "The post information could not be retrieved."
             })
         })
 })
 
 server.get('/api/posts/:id', function (req, res) {
     const postId = req.params.id;
-    db.findById(postId)
-        .then(post => {
-            res.json({ post })
+    if (postId === null) {
+        return res.status(404).json({
+            message: "The post with the specified ID does not exist."
+        })
+    }
+    post.get(postId)
+        .then(postContent => {
+            console.log("POST", postContent); 
+            {res.json({ postContent })}
         })
         .catch(error => {
-            if (res.statusCode === 404) {
-                res.status(404).json({
-                    message: "The post with the specified ID does not exist."
-                })
-            } else {
-                res.status(500).json({
-                    error: "The posts information could not be retrieved."
-                })
-            }
-
+            res.status(500).json({
+                error: "The post's information could not be retrieved."
+            })
         })
 })
 
 server.post('/api/posts', (req, res) => {
     const newPost = req.body;
-    db.insert(newPost)
-        .then(post => {
-            res.status(201).json({ post });
+    if (!newPost.text || !newPost.userId) {
+        console.log('text', newPost.text);
+        return res.status(400).json({
+            errorMessage: "Please provide text and userId for the post."
+        })
+    }
+    post.insert(newPost)
+        .then(posts => {
+            res.status(201).json({ posts });
         })
         .catch(err => {
             if (res.statusCode === 400) {
@@ -70,15 +78,10 @@ server.post('/api/posts', (req, res) => {
 
 server.delete('/api/posts/:id', (req, res) => {
     const { id } = req.params;
-    let post;
-    db.findById(id)
-        .then(foundPost => {
-            post = { ...foundPost };
-            return db.remove(id)
-
-        })
+    let deleted;
+    post.remove(id)
         .then(() => {
-            res.status(201).json({ post });
+            res.status(201).json({ message: "Post has been deleted" });
         })
         .catch(err => {
             if (res.statusCode === 404) {
@@ -97,23 +100,20 @@ server.put('/api/posts/:id', (req, res) => {
     const { id } = req.params;
     const updatedPost = req.body;
 
-    if (!updatedPost.title || !updatedPost.contents) {
-        console.log('title', updatedPost.title);
-        console.log('contents', updatedPost.contents);
-
-
+    if (!updatedPost.text) {
+        console.log('text', updatedPost.text);
         return res.status(400).json({
-            errorMessage: "Please provide title and contents for the post."
+            errorMessage: "Please provide text for the post."
         })
     }
-    db.update(id, updatedPost)
+    post.update(id, updatedPost)
         .then((updated) => {
-            console.log('post', !updated);
+            console.log('post', updated);
             if (updated > 0) {
-                db.findById(id)
+                post.update(id)
                     .then(post => {
-                        console.log('post', post);
-                        console.log('contents', post.contents);
+                        // console.log('post', post);
+                        // console.log('text', post.text);
                         res.status(200).json({ post });
                     })
             } else {
