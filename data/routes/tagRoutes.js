@@ -1,6 +1,6 @@
 const express = require('express');
 
-const tagData = require('../seeds/01-tags.js');
+const tagData = require('../helpers/tagDb');
 const router = express.Router();
 
 module.exports = router;
