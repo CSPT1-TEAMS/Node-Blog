@@ -1,7 +1,8 @@
 const express = require('express');
-const postData = require('./data/helpers/postDb.js');
-const tagData = require('./data/helpers/userDb.js');
-const userData = require('./data/helpers/userDb.js');
+
+const postRoutes = require('./data/routes/postRoutes');
+const tagRoutes = require('./data/routes/tagRoutes');
+const userRoutes = require('./data/routes/userRoutes');
 
 
 const server = express();
