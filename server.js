@@ -11,6 +11,7 @@ server.use(logger());
 server.use(express.json());
 
 server.get('/posts', (req, res) => {
+
     getPosts.get()
         .then( posts => {
             res.status(200).json({ posts });
@@ -32,26 +33,45 @@ server.get('/posts/:id', (req, res) => {
         })
 });
 
-server.get('/tags', (req, res) => {
-    getTags.get()
-        .then( tags => {
-            res.status(200).json({ tags });
+
+server.post('/posts', (req, res) => {
+    const { text, userId } = req.body;
+    const content = { text, userId };
+
+    getPosts.insert(content)
+        .then( content => {
+            res.status(200).json({ content });
         })
         .catch( err => {
             res.status(500).json({ err: "NOTHING MATE" });
         })
 });
 
-server.get('/users', (req, res) => {
-    getUsers.get()
-        .then( users => {
-            res.status(200).json({ users });
+server.put('/posts/:id', (req, res) => {
+    const { id } = req.params;
+    const { text } = req.body;
+    const post = { text };
+
+    getPosts.update(id, post)
+        .then( post => {
+            res.status(200).json({ post });
         })
         .catch( err => {
             res.status(500).json({ err: "NOTHING MATE" });
         })
 });
 
+server.delete('/posts/:id', (req, res) => {
+    const { id } = req.params;
+
+    getPosts.remove(id)
+        .then( post => {
+            res.status(200).json({ post })
+        })
+        .catch( err => {
+            res.status(500).json({ err: "NOTHING MATE" });
+        })
+});
 
 
 server.listen(port, () => {
