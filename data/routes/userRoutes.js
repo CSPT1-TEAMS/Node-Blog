@@ -25,4 +25,13 @@ router.get('/:id', (req, res) => {
       })
 })
 
+router.post('/', (req, res) => {
+    userData.insert(req.body)
+        .then(response => {
+            res.status(201).json({ ...req.body, ...response });
+        })
+        .catch(err => response.status(500).json({ err }));
+})
+
+
 module.exports = router;
