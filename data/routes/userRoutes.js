@@ -20,6 +20,7 @@ router.get('/:id', (req, res) => {
           res.json({ user });
       })
       .catch(err => {
+          // why is the wrong id giving me an empty object instead of the error message?
           res.status(404).json({ error: "The user with the specified id does not exist." });
       })
 })
