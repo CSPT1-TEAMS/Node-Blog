@@ -13,4 +13,15 @@ router.get('/', (req, res) => {
     })
 })
 
+router.get('/:id', (req, res) => {
+    const postId = req.params.id;
+    userData.get(postId)
+      .then(user => {
+          res.json({ user });
+      })
+      .catch(err => {
+          res.status(404).json({ error: "The user with the specified id does not exist." });
+      })
+})
+
 module.exports = router;
