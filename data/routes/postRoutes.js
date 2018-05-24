@@ -45,4 +45,16 @@ router.put('/:id', (req, res) => {
         .catch(err => response.status(500).json({ error: "The post information could not be modified." }));
 })
 
+router.delete('/:id', (req, res) => {
+    const { id } = req.params;
+    postData.get(id)
+        .then(foundPost => {
+            postData.remove(id)
+                .then(response => {
+                    res.status(200).json({ message: "===POST DELETED===" })
+                })
+        })
+        .catch(err => response.status(500).json({ err }))
+})
+
 module.exports = router;

@@ -45,4 +45,15 @@ router.put('/:id', (req, res) => {
         .catch(err => response.status(500).json({ error: "The post information could not be modified." }));
 })
 
+router.delete('/:id', (req, res) => {
+    const { id } = req.params;
+    tagData.get(id)
+        .then(foundTag => {
+            tagData.remove(id)
+                .then(response => {
+                    res.status(200).json({ message: "===TAG DELETED===" })
+                })
+        })
+        .catch(err => response.status(500).json({ err }))
+})
 module.exports = router;

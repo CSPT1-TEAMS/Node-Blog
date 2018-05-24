@@ -34,8 +34,6 @@ router.post('/', (req, res) => {
 })
 
 router.put('/:id', (req, res) => {
-    // okay so the put request is working but hanging...I have to hit 
-    // cancel request in Postman but the thing is actually updated. Why?
     userData.update(req.params.id, req.body)
         .then(response => {
             // res.status(200).json(req.body);
@@ -46,6 +44,18 @@ router.put('/:id', (req, res) => {
               .catch(err => res.status(404).json({ err }))
         })
         .catch(err => response.status(500).json({ error: "The post information could not be modified." }));
+})
+
+router.delete('/:id', (req, res) => {
+    const { id } = req.params;
+    userData.get(id)
+        .then(foundUser => {
+            userData.remove(id)
+                .then(response => {
+                    res.status(200).json({ message: "===USER DELETED===" })
+                })
+        })
+        .catch(err => response.status(500).json({ err }))
 })
 
 module.exports = router;
