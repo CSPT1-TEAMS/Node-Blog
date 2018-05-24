@@ -42,7 +42,7 @@ router.put('/:id', (req, res) => {
               })
               .catch(err => res.status(404).json({ err }))
         })
-        .catch(err => response.status(500).json({ error: "The post information could not be modified." }));
+        .catch(err => response.status(500).json({ error: "The tag information could not be modified." }));
 })
 
 router.delete('/:id', (req, res) => {
