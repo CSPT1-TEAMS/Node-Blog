@@ -7,9 +7,12 @@ const cors = require('cors');
 const helmet = require('helmet');
 const server = express();
 const router = express.Router();
+const postRoutes = require('./posts/postRoutes');
+const userRoutes = require('./users/userRoutes');
+const tagRoutes = require('./tags/tagRoutes');
 
-const userRoutes = require('./userRoutes');
 const { logger, greeter } = require('./middleware.js')
+
 server.listen(5000, () => {
     console.log('=== APP running on port 5000 ===')
 })
@@ -23,7 +26,9 @@ server.use(logger('loading'));
 
 //use route handlers
 
-server.use('/api/posts', userRoutes);
+server.use('/api/posts', postRoutes);
+server.use('/api/users', userRoutes);
+server.use('/api/tags', tagRoutes);
 
-// server.use('/api/posts/:id', userRoutes)
+
 module.exports = server;

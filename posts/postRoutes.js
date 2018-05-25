@@ -1,8 +1,6 @@
 const express = require('express');
-const post = require('./data/helpers/postDb.js');
-const tag = require('./data/helpers/tagDb.js');
-const user = require('./data/helpers/userDb.js');
-const logger = require('./middleware.js');
+const post = require('../data/helpers/postDb.js');
+const logger = require('../middleware.js');
 // const server = require('./server.js');
 
 const router = express.Router();
@@ -20,27 +18,21 @@ router.get('/', function (req, res) {
         })
 })
 
+
+
 router.get('/:id', function (req, res) {
     const postId = req.params.id;
     const userFound = !req.params;
-    // if ( userFound === 0 ) {
-    //     return res.status(404).json({
-    //         message: "The post with the specified ID does not exist."
-    //     })
-    // }
-    console.log('CODE1', res.statusCode)
-
     post.get(postId)
-        .then(postContent => {
+        .then(post => {
             console.log('CODE', res.statusCode)
-            if (res.statusCode === 404) {
+            if (post) {
+                res.json({ post })
+            } else {
                 return res.status(404).json({
-                    message: "The post with the specified ID does not exist."
+                    message: "The tag with the specified ID does not exist."
                 })
-            } else
-            console.log(userFound)
-            console.log("POST", postContent);
-            { res.json({ postContent }) }
+            }
         })
         .catch(error => {
             res.status(500).json({
@@ -78,19 +70,20 @@ router.delete('/:id', (req, res) => {
     const { id } = req.params;
     let deleted;
     post.remove(id)
-        .then((deleted) => {
-            res.status(201).json({ deleted});
-        })
-        .catch(err => {
-            if (res.statusCode === 404) {
-                res.status(404).json({
+        .then(deleted => {
+            console.log('CODE', res.statusCode)
+            if (deleted) {
+                res.status(201).json({ deleted })
+            } else {
+                return res.status(404).json({
                     message: "The post with the specified ID does not exist."
                 })
-            } else {
-                res.status(500).json({
-                    error: "The post could not be removed"
-                })
             }
+        })
+        .catch(err => {
+            res.status(500).json({
+                error: "The post could not be removed"
+            })
         })
 })
 
@@ -107,9 +100,9 @@ router.put('/:id', (req, res) => {
     post.update(id, updatedPost)
         .then((updated) => {
             if (updated === 1) {
-                        console.log('post', post);
-                        console.log('text', updated.text);
-                        res.status(200).json({ updated });
+                console.log('post', post);
+                console.log('text', updated.text);
+                res.status(200).json({ updated });
             } else {
                 res.status(404).json({
                     message: "The post with the specified ID does not exist."
