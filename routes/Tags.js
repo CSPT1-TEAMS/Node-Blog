@@ -10,7 +10,7 @@ tagRoutes.get('/', (req, res) => {
             res.status(200).json({ tags });
         })
         .catch( err => {
-            res.status(500).json({ err: "NOTHING MATE" });
+            res.status(500).json({ err: "ERROR MATE" });
         })
 });
 
@@ -22,7 +22,7 @@ tagRoutes.get('/:id', (req, res) => {
             res.status(200).json({ tags });
         })
         .catch( err => {
-            res.status(500).json({ err: "NOTHING MATE" });
+            res.status(500).json({ err: "ERROR MATE" });
         })
 });
 
@@ -36,7 +36,7 @@ tagRoutes.post('/', (req, res) => {
             res.status(200).json({ tagPost });
         })
         .catch( err => {
-            res.status(500).json({ err: "NOTHING MATE" });
+            res.status(500).json({ err: "ERROR MATE" });
         })
 });
 
@@ -50,7 +50,7 @@ tagRoutes.put('/:id', (req, res) => {
             res.status(200).json({ tagContent });
         })
         .catch( err => {
-            res.status(500).json({ err: "NOTHING MATE" });
+            res.status(500).json({ err: "ERROR MATE" });
         })
 });
 
@@ -62,7 +62,7 @@ tagRoutes.delete('/:id', (req, res) => {
             res.status(200).json({ tag })
         })
         .catch( err => {
-            res.status(500).json({ err: "NOTHING MATE" });
+            res.status(500).json({ err: "ERROR MATE" });
         })
 });
 

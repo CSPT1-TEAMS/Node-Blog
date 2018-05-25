@@ -1,68 +1,69 @@
 const express = require('express');
 const userRoutes = express();
 
-const getUsers = require('./data/helpers/userDb.js');
+const getUsers = require('../data/helpers/userDb.js');
 
 userRoutes.get('/', (req, res) => {
 
-    getPosts.get()
-        .then( posts => {
-            res.status(200).json({ posts });
+    getUsers.get()
+        .then( users => {
+            res.status(200).json({ users });
         })
         .catch( err => {
-            res.status(500).json({ err: "NOTHING MATE" });
+            res.status(500).json({ err: "ERROR MATE" });
         })
 });
 
 userRoutes.get('/:id', (req, res) => {
     const { id } = req.params;
 
-    getPosts.get(id)
-        .then( posts => {
-            res.status(200).json({ posts });
-        })
-        .catch( err => {
-            res.status(500).json({ err: "NOTHING MATE" });
-        })
+    getUsers.get(id)
+        getUsers.getUserPosts(id)
+            .then( users => {
+                res.status(200).json({ users });
+            })
+            .catch( err => {
+                res.status(500).json({ err: "ERROR MATE" });
+            })
 });
 
 
 userRoutes.post('/', (req, res) => {
-    const { text, userId } = req.body;
-    const content = { text, userId };
+    const { name } = req.body;
+    const user = { name };
 
-    getPosts.insert(content)
-        .then( content => {
-            res.status(200).json({ content });
+    getUsers.insert(user)
+        .then( user => {
+            res.status(200).json({ user });
         })
         .catch( err => {
-            res.status(500).json({ err: "NOTHING MATE" });
+            res.status(500).json({ err: "ERROR MATE" });
         })
 });
 
 userRoutes.put('/:id', (req, res) => {
     const { id } = req.params;
-    const { text } = req.body;
-    const post = { text };
+    const { name } = req.body;
+    const user = { name };
 
-    getPosts.update(id, post)
-        .then( post => {
-            res.status(200).json({ post });
+    getUsers.update(id, user)
+        .then( user => {
+            res.status(200).json({ user });
         })
         .catch( err => {
-            res.status(500).json({ err: "NOTHING MATE" });
+            res.status(500).json({ err: "ERROR MATE" });
         })
 });
 
 userRoutes.delete('/:id', (req, res) => {
     const { id } = req.params;
 
-    getPosts.remove(id)
-        .then( post => {
-            res.status(200).json({ post })
+    getUsers.remove(id)
+        .then( user => {
+            res.status(200).json({ user })
         })
         .catch( err => {
-            res.status(500).json({ err: "NOTHING MATE" });
+            res.status(500).json({ err: "ERROR MATE" });
         })
 });
 
