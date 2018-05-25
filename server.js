@@ -10,3 +10,5 @@ server.listen(3000,  () => {
 
 server.use(express.json())
 server.use('/api/users', userRouter)
+server.use('/api/posts', postRouter)
+server.use('/api/tags', tagRouter)
