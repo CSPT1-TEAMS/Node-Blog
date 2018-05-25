@@ -38,6 +38,17 @@ router.get('/:id', function (req, res) {
         })
 })
 
+router.get('/:id/posts', (req, res) => {
+    user.getUserPosts(req.params.id)
+    .then( response => {
+        res.send(response);
+    })
+    .catch(err => {
+        res.status(500);
+    })
+})
+
+
 router.post('/', (req, res) => {
     const newUser = req.body;
     if (!newUser.name) {

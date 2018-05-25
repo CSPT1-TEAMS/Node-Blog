@@ -102,7 +102,9 @@ router.put('/:id', (req, res) => {
             if (updated === 1) {
                 console.log('post', post);
                 console.log('text', updated.text);
-                res.status(200).json({ updated });
+                post.get(req.params.id).then(updated => {
+                    res.status(200).json({ updated });
+                })
             } else {
                 res.status(404).json({
                     message: "The post with the specified ID does not exist."
