@@ -37,6 +37,23 @@ router.get("/:id", (req, res, next) => {
     })
 })
 
+router.get("/:id/tags", (req, res, next) => {
+    const { id } = req.params;
+    db.getPostTags(id)
+    .then(tags => {
+        console.log(tags);
+        return res.status(200).json(tags);
+    })
+    .catch(error => {
+        next({
+            status: 500,
+            message: {
+                error: "Error fetching data from server."
+            }
+        })
+    })
+})
+
 router.post("/", (req, res, next) => {
     const post = req.body;
     db.insert(post)

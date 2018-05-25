@@ -37,6 +37,23 @@ router.get("/:id", (req, res, next) => {
     })
 })
 
+router.get("/:id/posts", (req, res, next) => {
+    const { id } = req.params;
+    db.getUserPosts(id)
+    .then(posts => {
+        console.log(posts);
+        return res.status(200).json(posts);
+    })
+    .catch(error => {
+        next({
+            status: 500,
+            message: {
+                error: "Error fetching data from server."
+            }
+        })
+    })
+})
+
 router.post("/", (req, res, next) => {
     const name = req.body;
     db.insert(name)
